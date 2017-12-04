@@ -24,10 +24,12 @@
 import bottom
 import random
 import textwrap
+import logging
 import discirc.signals as SIGNALNAMES
 
 from asyncblink import signal
 from discirc.message import Message
+from discirc.log import init_logging
 
 
 __author__ = 'TROUVERIE Joachim'
@@ -55,7 +57,10 @@ class IRCBot(bottom.Client):
         self.nick = config.get('ircNick', 'discirc')
         self.channels = config['mappingChannels']
         self.password = config.get('ircPass')
-        self.channelPass = config['channelPass']
+        self.channelPass = config.get('channelPass', {})
+
+        loglevel = logging.DEBUG if config.get('debug', False) else logging.INFO
+        self.logger = init_logging(loglevel)
 
         self.on('CLIENT_CONNECT', self.on_connect)
         self.on('PING', self.on_ping)
@@ -81,6 +86,7 @@ class IRCBot(bottom.Client):
         """Checking if Message Of The Day is done because it may
         interfere with joining channels"""
         for chan in self.channels.values():
+            self.logger.debug('Join IRC chan {}'.format(chan))
             if chan not in self.channelPass:
                 self.send('JOIN', channel=chan)
             else:
@@ -88,6 +94,7 @@ class IRCBot(bottom.Client):
 
     def on_ping(self, message, **kwargs):
         """Keep alive server"""
+        self.logger.debug('PONG message')
         self.send('PONG', message=message)
 
     def on_irc_message(self, nick, target, message, **kwargs):
@@ -101,6 +108,8 @@ class IRCBot(bottom.Client):
             return
 
         data = Message(target, nick, message)
+
+        self.logger.debug('Send IRC message {}:{}'.format(nick, message))
 
         if target != self.nick:
             self.irc_signal.send(self, data=data, private=False)
@@ -137,4 +146,5 @@ class IRCBot(bottom.Client):
             )
             chunks = textwrap.wrap(format_msg, self.IRC_MSG_CHUNK_LENGTH, break_long_words=False)
             for chunk in chunks:
+                self.logger.debug('Receive Discord message {}'.format(chunk))
                 self.send('PRIVMSG', target=target, message=chunk)

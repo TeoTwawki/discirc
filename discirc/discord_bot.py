@@ -23,10 +23,13 @@
 
 import asyncio
 import discord
+import logging
 import discirc.signals as SIGNALNAMES
 
 from asyncblink import signal
 from discirc.message import Message
+from discirc.log import init_logging
+
 
 __author__ = 'TROUVERIE Joachim'
 
@@ -43,6 +46,9 @@ class DiscordWrapper(object):
         self.token = config['discordToken']
         self.channels = config['mappingChannels']
         self.command_chars = config.get('commandChars', [])
+
+        loglevel = logging.DEBUG if config.get('debug', False) else logging.INFO
+        self.logger = init_logging(loglevel)
 
         # signals
         self.discord_signal = signal(SIGNALNAMES.DISCORD_MSG)
@@ -71,6 +77,9 @@ class DiscordWrapper(object):
             channel = message.channel.name
             source = message.author.name
 
+            self.logger.debug('Send Discord message {}:{}'.format(
+                source, content))
+
             # private message
             if not channel:
                 if content.startswith('@'):
@@ -97,6 +106,9 @@ class DiscordWrapper(object):
         }
         message = kwargs['data']
         private = kwargs['private']
+
+        self.logger.debug('Receive IRC message {}'.format(message))
+
         if not private:
             chan = maps.get(message.channel)
             target = self._get_channel_by_name(chan)

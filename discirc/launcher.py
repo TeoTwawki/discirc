@@ -53,3 +53,7 @@ def main(config):
     loop.create_task(irc.connect())
     loop.create_task(disc.run())
     loop.run_forever()
+
+
+if __name__ == "__main__":
+    main()
