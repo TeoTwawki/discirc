@@ -109,7 +109,7 @@ class IRCBot(bottom.Client):
 
         data = Message(target, nick, message)
 
-        self.logger.debug('Send IRC message {}:{}'.format(nick, message))
+        self.logger.debug('Send IRC message {}'.format(data))
 
         if target != self.nick:
             self.irc_signal.send(self, data=data, private=False)
@@ -134,6 +134,8 @@ class IRCBot(bottom.Client):
         else:
             target = message.channel
 
+        self.logger.debug('Receive Discord message {}'.format(message))
+
         for msg in content.split('\n'):
             # set a color for this author
             if source not in self.users:
@@ -146,5 +148,4 @@ class IRCBot(bottom.Client):
             )
             chunks = textwrap.wrap(format_msg, self.IRC_MSG_CHUNK_LENGTH, break_long_words=False)
             for chunk in chunks:
-                self.logger.debug('Receive Discord message {}'.format(chunk))
                 self.send('PRIVMSG', target=target, message=chunk)

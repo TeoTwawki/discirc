@@ -35,4 +35,6 @@ class Message(object):
         self.channel = channel
         self.source = source
         self.content = content
-    
+
+    def __str__(self):
+        return '{}({}):{}'.format(self.source, self.channel, self.content)

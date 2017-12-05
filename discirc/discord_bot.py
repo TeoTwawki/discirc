@@ -77,8 +77,7 @@ class DiscordWrapper(object):
             channel = message.channel.name
             source = message.author.name
 
-            self.logger.debug('Send Discord message {}:{}'.format(
-                source, content))
+            self.logger.debug('Send Discord message {}'.format(message))
 
             # private message
             if not channel:
