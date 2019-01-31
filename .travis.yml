@@ -5,5 +5,7 @@ python:
 jobs:
   include:
     - stage: "Pylint"
-      install: pip install pylint
+      install:
+        - pip install -r REQUIREMENTS.txt
+        - pip install pylint
       script: pylint discirc
