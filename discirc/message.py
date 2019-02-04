@@ -15,24 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-    Message class
-    -------------
+Message class
+-------------
 
-    Wrapper for bots messages
+Wrapper for bots messages
 """
 
-__author__ = 'TROUVERIE Joachim'
+__author__ = "TROUVERIE Joachim"
 
 
-class Message(object):
-    """Wrapper for bots messages
+from collections import namedtuple
 
-    :param channel: Message channel
-    :param source: Message source
-    :param content: Message content
-    """
-    def __init__(self, channel, source, content):
-        self.channel = channel
-        self.source = source
-        self.content = content
-    
+
+Message = namedtuple("Message", ["channel", "source", "content"])

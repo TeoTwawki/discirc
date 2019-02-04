@@ -15,36 +15,40 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-    DiscIRC launcher
-    ----------------
+DiscIRC launcher
+----------------
 
-    Launcher for DiscIRC app
+Launcher for DiscIRC app
 """
 
-import click
 import asyncio
 import os.path as op
 import sys
 import json
-
+import click
 from discirc.discord_bot import DiscordWrapper
 from discirc.irc_bot import IRCBot
 
 
-__author__ = 'TROUVERIE Joachim'
+__author__ = "TROUVERIE Joachim"
 
 
 @click.command()
-@click.option('-c', '--config', type=click.Path(),
-              help='Alternate config file (default to ~/.discirc)')
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(),
+    help="Alternate config file (default to ~/.discirc)",
+)
 def main(config):
+    """Main launcher"""
     if not config:
-        config = op.expanduser('~/.discirc')
+        config = op.expanduser("~/.discirc")
     if not op.exists(config):
-        sys.exit(1, 'No config file found')
+        sys.exit(1, "No config file found")
 
-    with open(config, 'r') as fi:
-        conf = json.load(fi)
+    with open(config, "r") as config_file:
+        conf = json.load(config_file)
 
     irc = IRCBot(conf)
     disc = DiscordWrapper(conf)

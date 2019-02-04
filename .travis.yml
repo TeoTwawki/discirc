@@ -1,11 +1,15 @@
 language: python
 python:
+  - 3.5
   - 3.6
+  - 3.7
 
 jobs:
   include:
-    - stage: "Pylint"
+    - stage: "Lint"
       install:
         - pip install -r REQUIREMENTS.txt
-        - pip install pylint
-      script: pylint discirc
+        - pip install pylint mypy
+      script:
+        - pylint discirc
+        - mypy discirc
