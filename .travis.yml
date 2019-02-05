@@ -10,6 +10,7 @@ jobs:
       install:
         - pip install -r REQUIREMENTS.txt
         - pip install pylint mypy
-      script:
-        - pylint discirc
-        - mypy discirc
+      name: "Pylint"
+      script: pylint discirc
+      - name: "Mypy"
+      script: mypy discirc
