@@ -1,6 +1,8 @@
 DiscIRC
 =======
 
+|version| |license| |travis|
+
 **DiscIRC** is a bot that syncs messages between `Discord <https://discordapp.com/>`_ and `IRC <http://www.irc.org/>`_. It's written in Python using the `discord.py <https://github.com/Rapptz/discord.py>`_ and `bottom <https://github.com/numberoverzero/bottom>`_ libraries.
 
 Installation
@@ -27,4 +29,9 @@ Then simply run **DiscIRC** thanks to the available command::
 Private messages
 ****************
 
-**DiscIRC** handles private messages. You need to prefix your message with a `@User` when sent from **Discord** and with `User:` from IRC. 
+**DiscIRC** handles private messages. You need to prefix your message with a `@User` when sent from **Discord** and with `User:` from IRC.
+
+
+.. |version| image:: https://img.shields.io/pypi/v/discirc.svg
+.. |license| image:: https://img.shields.io/github/license/j0ack/discirc.svg
+.. |travis| image:: https://img.shields.io/travis/j0ack/discirc.svg

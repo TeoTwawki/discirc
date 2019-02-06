@@ -21,5 +21,5 @@
     Signal names for IRC and Discord bots to communicate
 """
 
-DISCORD_MSG = 'discord_msg'
-IRC_MSG = 'irc_msg'
+DISCORD_MSG = "discord_msg"
+IRC_MSG = "irc_msg"
