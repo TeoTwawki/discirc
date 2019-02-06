@@ -10,4 +10,4 @@ install:
 
 script:
   - pylint discirc
-  - mypy discirc
+  - mypy --ignore-missing-imports discirc
