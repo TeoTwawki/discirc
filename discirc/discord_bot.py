@@ -31,13 +31,9 @@ __author__ = "TROUVERIE Joachim"
 
 
 class DiscordWrapper:
-    """Discord bot wrapper
+    """Discord bot wrapper"""
 
-    :param config: config for bot
-    :type config: dict
-    """
-
-    def __init__(self, config):
+    def __init__(self, config: dict):
         self.bot = discord.Client()
         self.token = config["discordToken"]
         self.channels = config["mappingChannels"]
